@@ -1,0 +1,8 @@
+[nginx]
+nginx ansible_ssh_host=127.0.0.1 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_port=10122 ansible_ssh_private_key_file=../.vagrant/machines/nginx/virtualbox/private_key
+[web]
+web1 ansible_ssh_host=127.0.0.1 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_port=10222 ansible_ssh_private_key_file=../.vagrant/machines/web1/virtualbox/private_key
+web2 ansible_ssh_host=127.0.0.1 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_port=10322 ansible_ssh_private_key_file=../.vagrant/machines/web2/virtualbox/private_key
+[db]
+db ansible_ssh_host=127.0.0.1 ansible_connection=ssh ansible_ssh_user=vagrant ansible_ssh_port=10422 ansible_ssh_private_key_file=../.vagrant/machines/db/virtualbox/private_key
+

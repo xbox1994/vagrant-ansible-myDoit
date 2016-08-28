@@ -1,0 +1,11 @@
+# ./nginx-workshop/tasks/install_nginx.yml
+
+- name: NGINX | Installing NGINX
+  apt:
+    name: nginx
+    state: latest
+ 
+- name: NGINX | Starting NGINX
+  service:
+    name: nginx
+    state: started

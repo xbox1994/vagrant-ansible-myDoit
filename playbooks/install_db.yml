@@ -1,0 +1,9 @@
+# ./nginx-workshop/tasks/install_db.yml
+
+- name: MONGODB | Installing MONGODB
+  apt:
+    name: mongodb-server
+    state: latest
+
+- name: MONGODB | Start MongoDB Server
+  command: bash -lc "mongod --fork --logpath '/dev/null'"
