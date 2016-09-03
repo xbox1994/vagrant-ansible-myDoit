@@ -47,6 +47,8 @@ config.vm.define "nginx" do |config|
     config.vm.network :forwarded_port, guest: 22, host: 10422, id: "ssh"
   end
 与ansible配合
+现在我用ansible只是把所有需要的依赖工具安装好
+
 配置默认信息
 cd playbooks
 sudo vim ansible.cfg
@@ -76,10 +78,12 @@ ssh vagrant@127.0.0.1 -p 10122
 看web跑了多久
 ansible web -m command -a uptime
 
-原来我们需要这样来ssh登录：ssh key
+SSH
 把主机的公钥发给客户机让主机登录
 scp id_rsa.pub vagrant@192.168.56.101:/home/vagrant/
 cat id_rsa.pub >> authorized_keys
+ansible使用的是私钥登录，-i加上identify file，就是私钥，用私钥当时创建人的身份登录，如果私钥对应的公钥在vagrant授权文件中
+ssh vagrant@127.0.0.1 -p 10122 -i /Users/tywang/WuhanWork/nginx-workshop/.vagrant/machines/nginx/virtualbox/private_key
 
 安装nginx（手动）
 ansible web -s -m apt -a "name=nginx update_cache=yes"
@@ -90,6 +94,7 @@ ansible web -s -m service -a "name=nginx state=started"
 cd playbooks
 openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -subj /CN=localhost -keyout nginx.key -out nginx.crt
 安装nginx git bundle npm
+➜  playbooks git:(master) ✗ ansible-playbook ../deploy.yml
 （自动）
 ├── Vagrantfile
 ├── deploy.yml
@@ -152,13 +157,16 @@ openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -subj /CN=localhost -keyout
 
 - name: MONGODB | Start MongoDB Server
   command: bash -lc "mongod --fork --logpath '/dev/null'"
+
+强制关闭后export LC_ALL=C或者/data/db rm .lock
 和go配合
-我在mac上安装的go，所有操作都是手动了，其实用ansible去自动化是最好的
+go agent与web/nginx的免密码登录
+go agent上：
+ssh-keygen
+scp ~/.ssh/id_rsa.pub vagrant@192.168.56.102:~
+web上：
+cat ~/id_rsa.pub >> ~/.ssh/authorized_keys
 
-暂时没有AWS就在本地将nginx和go和vagrant配合搭建我的项目吧
-
-nginx和web如何配置达到高可用 负载均衡
-go agent与web的免密码登录
-go agent同时发布到所有web子集
-db上后台重启mongod
-web上只负责运行，那么不用npm，但要bundle
+todo:
+db上后台重启
+AWS

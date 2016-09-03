@@ -1,11 +1,15 @@
 # ./nginx-workshop/tasks/install_nginx.yml
 
-- name: NGINX | Installing NGINX
+- name: NGINX | Installing nginx
   apt:
     name: nginx
     state: latest
- 
-- name: NGINX | Starting NGINX
+
+- name: NGINX | Configure nginx
+  template: src=playbooks/myDoit_nginx.cfg dest=/etc/nginx/sites-enabled/default
+  notify: restart nginx
+
+- name: NGINX | Starting nginx
   service:
     name: nginx
-    state: started
+    state: restarted
