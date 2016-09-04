@@ -1,5 +1,3 @@
-# ./nginx-workshop/tasks/install_db.yml
-
 - name: MONGODB | Installing MONGODB
   apt:
     name: mongodb-server

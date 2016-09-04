@@ -1,15 +1,42 @@
-# ./nginx-workshop/tasks/install_nginx.yml
-
-- name: NGINX | Installing nginx
+- name: NGINX | installing nginx
   apt:
     name: nginx
-    state: latest
+    #update_cache: yes
 
-- name: NGINX | Configure nginx
-  template: src=playbooks/myDoit_nginx.cfg dest=/etc/nginx/sites-enabled/default
+- name: NGINX | create directories for ssl certiifcates
+  file:
+    path: /etc/nginx/ssl
+    state: directory
+
+- name: NGINX | copy TLS key
+  copy:
+    src: files/nginx.key
+    dest: "{{ key_file }}"
+    owner: root
+    mode: 0600
   notify: restart nginx
 
-- name: NGINX | Starting nginx
-  service:
-    name: nginx
-    state: restarted
+- name: NGINX | copy TLS certificate
+  copy:
+    src: files/nginx.crt
+    dest: "{{ cert_file }}"
+  notify: restart nginx
+
+- name: NGINX | copy nginx config file
+  template:
+    src: files/myDoit_nginx.cfg
+    dest: "{{ conf_file }}"
+  notify: restart nginx
+
+- name: NGINX | enable configuration
+  file:
+    dest: /etc/nginx/sites-enabled/default
+    src: "{{ conf_file }}"
+    state: link
+  notify: restart nginx
+
+- name: NGINX | copy index.html
+  template:
+    src: templates/index.html
+    dest: /usr/share/nginx/html/index.html
+    mode: 0644

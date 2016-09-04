@@ -1,0 +1,26 @@
+#!/usr/bin/env ansible-playbook
+
+- hosts: nginx
+  vars:
+    key_file: /etc/nginx/ssl/nginx.key
+    cert_file: /etc/nginx/ssl/nginx.crt
+    conf_file: /etc/nginx/sites-available/default
+    server_name: localhost
+  tasks:
+    - include: 'install_nginx.yml'
+      become: yes
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+
+- hosts: web
+  tasks:
+    - include: 'install_web.yml'
+      become: yes
+
+- hosts: db
+  tasks:
+    - include: 'install_db.yml'
+      become: yes
