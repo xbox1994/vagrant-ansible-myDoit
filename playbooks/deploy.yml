@@ -1,11 +1,12 @@
 #!/usr/bin/env ansible-playbook
+- hosts: all
+  gather_facts: True
+  tasks:
+    - debug: var=ansible_distribution #ansible nginx -m setup -a 'filter=ansible_'
 
 - hosts: nginx
-  vars:
-    key_file: /etc/nginx/ssl/nginx.key
-    cert_file: /etc/nginx/ssl/nginx.crt
-    conf_file: /etc/nginx/sites-available/default
-    server_name: localhost
+  vars_files:
+    - nginx_var.yml
   tasks:
     - include: 'install_nginx.yml'
       become: yes

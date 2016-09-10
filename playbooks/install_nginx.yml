@@ -2,6 +2,9 @@
   apt:
     name: nginx
     #update_cache: yes
+    #ignore_errors: True
+    #register: result
+#- debug: var=result
 
 - name: NGINX | create directories for ssl certiifcates
   file:
