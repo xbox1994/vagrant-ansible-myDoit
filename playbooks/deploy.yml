@@ -2,26 +2,20 @@
 - hosts: all
   gather_facts: True
   tasks:
-    - debug: var=ansible_distribution #ansible nginx -m setup -a 'filter=ansible_'
+    - debug: var=ansible_distribution,ansible_env #ansible nginx -m setup -a 'filter=ansible_'
 
 - hosts: nginx
-  vars_files:
-    - nginx_var.yml
-  tasks:
-    - include: 'install_nginx.yml'
-      become: yes
-  handlers:
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted
+  become: yes
+  roles:
+    - nginx
 
 - hosts: web
-  tasks:
-    - include: 'install_web.yml'
-      become: yes
+  roles:
+    - deploy
 
 - hosts: db
-  tasks:
-    - include: 'install_db.yml'
-      become: yes
+  become: yes
+  vars_files:
+    - secrets.yml
+  roles:
+    - mongodb

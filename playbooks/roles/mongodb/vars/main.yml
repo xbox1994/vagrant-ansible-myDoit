@@ -1,0 +1,11 @@
+user: "{{ ansible_ssh_user }}"
+proj_name: mydoit
+venv_home: "{{ ansible_env.HOME }}"
+venv_path: "{{ venv_home }}/{{ proj_name }}"
+repo_url: git@github.com:xbox1994/myDoit.git
+conf_path: /etc/nginx/conf
+tls_enabled: True
+database_name: "{{ proj_name }}"
+database_user: "{{ proj_name }}"
+database_host: localhost
+database_port: 5432

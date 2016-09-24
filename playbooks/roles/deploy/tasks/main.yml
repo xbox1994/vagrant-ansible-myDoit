@@ -1,0 +1,13 @@
+- name: install apt packages
+  apt: pkg={{ item }} update_cache=yes cache_valid_time=360000
+  with_items:
+    - git
+    - ruby-full
+    - mongodb-clients
+
+- name: BUNDLER | Installing BUNDLER
+  become: yes
+  command: bash -lc "gem install bundler"
+#
+#- name: check out the repository on the host
+#  git: repo={{ repo_url }} dest={{ proj_path }} accept_hostkey=yes

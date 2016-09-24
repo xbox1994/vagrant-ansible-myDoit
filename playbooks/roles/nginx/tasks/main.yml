@@ -27,7 +27,7 @@
 
 - name: NGINX | copy nginx config file
   template:
-    src: files/myDoit_nginx.cfg
+    src: myDoit_nginx.cfg
     dest: "{{ conf_file }}"
   notify: restart nginx
 
@@ -40,6 +40,6 @@
 
 - name: NGINX | copy index.html
   template:
-    src: templates/index.html
+    src: index.html
     dest: /usr/share/nginx/html/index.html
     mode: 0644

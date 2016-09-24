@@ -1,0 +1,18 @@
+- name: install apt packages
+  apt: pkg={{ item }}
+  with_items:
+    - mongodb-server
+#    - python-pipx
+
+- name: start mongodb server
+  command: bash -lc "mongod --fork --logpath '/dev/null'"
+
+#- name: install the latest pymongo package
+#  pip: name=pymongo state=latest use_mirrors=no
+#
+#- name: create mongodb user
+#  mongodb_user:
+#    database: "{{ database_name }}"
+#    name: "{{ database_user }}"
+#    password: "{{ db_pass }}"
+#    state: present
