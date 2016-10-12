@@ -7,7 +7,7 @@
 
 - name: BUNDLER | Installing BUNDLER
   become: yes
-  command: bash -lc "gem install bundler"
+  command: gem install bundler
 #
 #- name: check out the repository on the host
 #  git: repo={{ repo_url }} dest={{ proj_path }} accept_hostkey=yes
