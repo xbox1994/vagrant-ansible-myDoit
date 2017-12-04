@@ -1,7 +1,7 @@
 - name: NGINX | installing nginx
   apt:
     name: nginx
-    #update_cache: yes
+    update_cache: yes
     #ignore_errors: True
     #register: result
 #- debug: var=result

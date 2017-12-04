@@ -1,0 +1,10 @@
+- name: jenkins1
+  command: wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+
+- name: jenkins2
+  command: sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+
+- name: install jenkins
+  apt:
+    name: jenkins
+    update_cache: yes

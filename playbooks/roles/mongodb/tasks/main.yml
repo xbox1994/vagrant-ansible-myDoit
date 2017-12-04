@@ -2,17 +2,16 @@
   apt: pkg={{ item }}
   with_items:
     - mongodb-server
-#    - python-pipx
 
-- name: start mongodb server
-  command: bash -lc "mongod --fork --logpath '/dev/null'"
+- name: configure mongodb
+  template: src=mongod.conf.j2 dest=/etc/mongod.conf
 
-#- name: install the latest pymongo package
-#  pip: name=pymongo state=latest use_mirrors=no
-#
-#- name: create mongodb user
-#  mongodb_user:
-#    database: "{{ database_name }}"
-#    name: "{{ database_user }}"
-#    password: "{{ db_pass }}"
-#    state: present
+- name: run mongodb
+  service: name=mongod state=started enabled=yes
+
+- name: create mongodb user
+  mongodb_user:
+    database: "{{ database_name }}"
+    name: "{{ database_user }}"
+    password: "{{ database_pass }}"
+    state: present

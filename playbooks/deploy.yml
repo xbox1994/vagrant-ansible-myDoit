@@ -3,6 +3,17 @@
   tasks:
     - debug: var=ansible_distribution,ansible_env #ansible nginx -m setup -a 'filter=ansible_'
 
+- hosts: db
+  become: yes
+  vars_files:
+    - secrets.yml
+  roles:
+    - mongodb
+
+- hosts: jenkins
+  roles:
+    - jenkins
+
 - hosts: nginx
   become: yes
   roles:
@@ -11,10 +22,3 @@
 - hosts: web
   roles:
     - deploy
-
-- hosts: db
-  become: yes
-  vars_files:
-    - secrets.yml
-  roles:
-    - mongodb

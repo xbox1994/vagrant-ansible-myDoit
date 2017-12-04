@@ -7,5 +7,3 @@ conf_path: /etc/nginx/conf
 tls_enabled: True
 database_name: "{{ proj_name }}"
 database_user: "{{ proj_name }}"
-database_host: localhost
-database_port: 5432
