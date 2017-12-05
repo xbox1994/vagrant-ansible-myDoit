@@ -5,10 +5,20 @@ Vagrant.configure("2") do |config|
     v.customize ["modifyvm", :id, "--memory", 256]
     v.customize ["modifyvm", :id, "--cpus", 1]
   end
-  # config.vm.provision :ansible do |ansible|
-  #   ansible.verbose = "vv"
-  #   ansible.playbook = "playbooks/deploy.yml"
-  # end
+  config.vm.provision :ansible do |ansible|
+    ansible.verbose = "vv"
+    ansible.playbook = "playbooks/deploy.yml"
+    ansible.inventory_path = "playbooks/hosts"
+  end
+
+  config.vm.define "jenkins" do |config|
+    config.vm.box = "alonsodomin/ubuntu-trusty64-java8"
+    config.vm.hostname = 'jenkins'
+
+    config.vm.network :private_network, ip: "192.168.56.104"
+    config.vm.network :forwarded_port, guest: 22, host: 10422, id: "ssh"
+    config.vm.network :forwarded_port, guest: 8080, host: 18082, id: "jenkins main port"
+  end
 
   config.vm.define "nginx" do |config|
     config.vm.hostname = 'nginx'
@@ -32,14 +42,4 @@ Vagrant.configure("2") do |config|
     config.vm.network :private_network, ip: "192.168.56.103"
     config.vm.network :forwarded_port, guest: 22, host: 10322, id: "ssh"
   end
-
-  config.vm.define "jenkins" do |config|
-    config.vm.box = "alonsodomin/ubuntu-trusty64-java8"
-    config.vm.hostname = 'jenkins'
-
-    config.vm.network :private_network, ip: "192.168.56.104"
-    config.vm.network :forwarded_port, guest: 22, host: 10422, id: "ssh"
-    config.vm.network :forwarded_port, guest: 8080, host: 18082, id: "jenkins main port"
-  end
-
 end

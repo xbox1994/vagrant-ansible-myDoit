@@ -1,5 +1,7 @@
 - name: jenkins1
-  command: wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+  apt_key:
+    url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+    state: present
 
 - name: jenkins2
   command: sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
