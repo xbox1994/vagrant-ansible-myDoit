@@ -1,12 +1,15 @@
-- name: jenkins1
+- name: jenkins apt key
   apt_key:
     url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
     state: present
 
-- name: jenkins2
+- name: jenkins private key
   command: sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 
 - name: install jenkins
   apt:
     name: jenkins
     update_cache: yes
+    cache_valid_time: 360000
+
+- include: jenkins_dependence.yml

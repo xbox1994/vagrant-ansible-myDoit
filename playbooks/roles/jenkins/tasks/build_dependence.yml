@@ -1,0 +1,19 @@
+- name: install apt packages
+  apt: pkg={{ item }} update_cache=yes cache_valid_time=360000
+  become: yes
+  with_items:
+    - git
+    - nodejs
+    - npm
+
+- name: system link node
+  file:
+    src: /usr/bin/nodejs
+    dest: /usr/bin/node
+    state: link
+
+- name: install grunt
+  become: yes
+  npm:
+    name: grunt-cli
+    global: yes

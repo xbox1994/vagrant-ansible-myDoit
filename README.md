@@ -34,6 +34,13 @@ ansible web -s -m service -a "name=nginx state=started"
 证书
 `openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -subj /CN=localhost -keyout nginx.key -out nginx.crt`
 
+SSH免密码登录
+```
+sudo su jenkins
+ssh-keygen
+ssh-copy-id vagrant@192.168.56.102
+```
+
 #参考
 涉及到网络部分的配置就GG：
 http://stackoverflow.com/questions/38636023/vagrant-not-supported-the-capability-change-host-name

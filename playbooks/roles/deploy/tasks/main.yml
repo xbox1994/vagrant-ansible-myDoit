@@ -1,5 +1,6 @@
 - name: install apt packages
   apt: pkg={{ item }} update_cache=yes cache_valid_time=360000
+  become: yes
   with_items:
     - git
     - ruby-full
