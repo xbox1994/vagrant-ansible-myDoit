@@ -6,8 +6,8 @@
 - name: configure mongodb
   template: src=mongod.conf.j2 dest=/etc/mongod.conf
 
-#- name: run mongodb
-#  service: name=mongod state=started enabled=yes
+- name: restart mongodb
+  command: /etc/init.d/mongodb restart
 #
 #- name: create mongodb user
 #  mongodb_user:
