@@ -6,12 +6,12 @@
 - name: configure mongodb
   template: src=mongod.conf.j2 dest=/etc/mongod.conf
 
-- name: run mongodb
-  service: name=mongod state=started enabled=yes
-
-- name: create mongodb user
-  mongodb_user:
-    database: "{{ database_name }}"
-    name: "{{ database_user }}"
-    password: "{{ database_pass }}"
-    state: present
+#- name: run mongodb
+#  service: name=mongod state=started enabled=yes
+#
+#- name: create mongodb user
+#  mongodb_user:
+#    database: "{{ database_name }}"
+#    name: "{{ database_user }}"
+#    password: "{{ database_pass }}"
+#    state: present
