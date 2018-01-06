@@ -1,0 +1,12 @@
+- name: DNS | install bind
+  apt: pkg={{ item }} update_cache=yes cache_valid_time=360000
+  with_items:
+    - bind9
+    - bind9utils
+    - bind9-doc
+
+- name: DNS | copy nginx config file
+  template:
+    src: named.conf.options
+    dest: /etc/bind/named.conf.options
+  notify: restart bind

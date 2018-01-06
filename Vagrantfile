@@ -42,4 +42,11 @@ Vagrant.configure("2") do |config|
     config.vm.network :private_network, ip: "192.168.56.103"
     config.vm.network :forwarded_port, guest: 22, host: 10322, id: "ssh"
   end
+
+  config.vm.define "dns" do |config|
+    config.vm.hostname = 'dns'
+
+    config.vm.network :private_network, ip: "192.168.56.104"
+    config.vm.network :forwarded_port, guest: 22, host: 10522, id: "ssh"
+  end
 end

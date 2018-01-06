@@ -1,0 +1,24 @@
+acl "trusted" {
+        192.168.56.0/24;
+        localhost;
+        localnets;
+};
+
+options {
+        directory "/var/cache/bind";
+        listen-on { 192.168.56.104;};
+        listen-on-v6 { none; };
+
+        dnssec-validation auto;
+
+        auth-nxdomain no;    # conform to RFC1035
+
+        recursion yes ;
+        allow-query { trusted;};
+
+        forwarders {
+                223.5.5.5;
+                223.6.6.6;
+        };
+        forward only ;
+};

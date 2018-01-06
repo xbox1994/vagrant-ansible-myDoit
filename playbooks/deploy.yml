@@ -23,3 +23,8 @@
 - hosts: web
   roles:
     - deploy
+
+- hosts: dns
+  become: yes
+  roles:
+    - dns
